@@ -17,7 +17,7 @@ afterAll(async()=>{if(child&&!child.killed){child.kill();await once(child,'exit'
 const post=(body,headers={})=>fetch(base+'/api/parse-file',{method:'POST',headers:{'Content-Type':'application/json',...headers},body:JSON.stringify(body)})
 describe('production server contract',()=>{
   it('serves health and the built app',async()=>{
-    expect((await (await fetch(base+'/api/health')).json()).version).toBe('3.7.0')
+    expect((await (await fetch(base+'/api/health')).json()).version).toBe('3.8.0')
     const r=await fetch(base+'/');expect(r.status).toBe(200)
     expect(r.headers.get('content-security-policy')).toContain("worker-src 'self' blob:")
     expect(await r.text()).toContain('<div id="root">')

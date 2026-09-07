@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import Sidebar from './components/Sidebar'
+import WorkspaceChrome from './components/WorkspaceChrome'
 import Toast from './components/Toast'
 import ErrorBoundary from './components/ErrorBoundary'
 import { useStore } from './store/useStore'
@@ -53,7 +54,8 @@ export default function App() {
     <div className="app-shell">
       <div className="layout">
         {!presentationMode && <Sidebar />}
-        <main className={`main${presentationMode ? ' main-fullscreen' : ''}`}>
+        <main id="workspace" className={`main${presentationMode ? ' main-fullscreen' : ''}`}>
+          {!presentationMode && <WorkspaceChrome />}
           <div hidden={activePage !== 'upload'}><UploadPage /></div>
           {activePage !== 'upload' && <ErrorBoundary key={activePage} onRecover={()=>useStore.getState().setActivePage('upload')}>{PAGES[activePage]}</ErrorBoundary>}
         </main>

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { APP_VERSION } from '../lib/version'
 import { useStore } from '../store/useStore'
 
-const NAV = [
+export const NAV = [
   { section: 'Data' },
   { id: 'upload', label: 'Upload / Entry', always: true },
   { id: 'compare', label: 'Multi-Company', always: true },
@@ -23,7 +24,7 @@ const NAV = [
   { id: 'aireport', label: 'Analyst Memo', badge: 'LOCAL' },
 ]
 
-function NavGlyph({ id }) {
+export function NavGlyph({ id }) {
   const common = {
     width: 18,
     height: 18,
@@ -175,7 +176,7 @@ export default function Sidebar() {
   const hasData = !!activeCompany
 
   function handleNav(id) {
-    if (!hasData && !['upload', 'compare'].includes(id)) return
+    if (!hasData && !['upload', 'compare', 'watchlist'].includes(id)) return
     setActivePage(id)
   }
 
@@ -224,7 +225,7 @@ export default function Sidebar() {
           FinScan <span>CDI</span>
         </h1>
         <p>Corporate Decision Intelligence</p>
-        <span className="version-badge">v3.7</span>
+        <span className="version-badge">v{APP_VERSION}</span>
       </div>
 
       <nav className="nav">
@@ -236,6 +237,9 @@ export default function Sidebar() {
           return (
             <button
               key={item.id}
+              disabled={disabled}
+              aria-current={active ? 'page' : undefined}
+              title={disabled ? 'Add a company to open this view' : item.label}
               className={`nav-item${active ? ' active' : ''}${disabled ? ' disabled' : ''}`}
               onClick={() => handleNav(item.id)}
             >
@@ -268,8 +272,10 @@ export default function Sidebar() {
           </div>
         </div>
 
-        <span className="api-label">Backend URL</span>
+        <details className="connection-settings"><summary>Connection settings</summary>
+        <label className="api-label" htmlFor="backend-url">Backend URL</label>
         <input
+          id="backend-url"
           type="text"
           value={urlVal}
           onChange={handleUrl}
@@ -277,7 +283,7 @@ export default function Sidebar() {
         />
         <div className={`api-status ${apiHealth.status}`}>
           {apiHealth.label}
-        </div>
+        </div></details>
       </div>
     </aside>
   )
