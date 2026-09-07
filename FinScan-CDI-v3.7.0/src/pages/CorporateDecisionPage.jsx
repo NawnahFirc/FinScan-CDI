@@ -342,7 +342,7 @@ export default function CorporateDecisionPage() {
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem', flexWrap: 'wrap', gap: 8 }}>
-        <div style={{ fontSize: 12, color: 'var(--text2)' }}>Smart explanation</div>
+        <div style={{ fontSize: 12, color: 'var(--text2)' }}>Reading perspective</div>
         <ExplainToggle mode={explainMode} setMode={setExplainMode} />
       </div>
       <ExplainBox decision={decision} mode={explainMode} />
@@ -359,16 +359,17 @@ export default function CorporateDecisionPage() {
           </div>
         </div>
         <div className="decision-score-panel">
-          <div className="score-orbit" role="img" aria-label={`Counterparty score ${decision.compositeScore} out of 100`}>
-            <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--border)" strokeWidth="7"/><circle cx="60" cy="60" r="52" fill="none" stroke={toneForLevel(decision.level)} strokeWidth="7" strokeLinecap="round" pathLength="100" strokeDasharray={`${Math.max(0, Math.min(100, decision.compositeScore))} 100`}/></svg>
-            <div className="decision-score">{decision.compositeScore}</div>
+          <div className="decision-score-label">Counterparty score</div>
+          <div className="score-readout"><strong>{decision.compositeScore}</strong><span>/100</span></div>
+          <div className="score-scale" role="meter" aria-label="Counterparty score" aria-valuemin={0} aria-valuemax={100} aria-valuenow={decision.compositeScore}>
+            <div className="score-scale-fill" style={{ width: `${Math.max(0, Math.min(100, decision.compositeScore))}%`, background: toneForLevel(decision.level) }} />
           </div>
-          <div className="decision-score-label">Counterparty Score / 100</div>
+          <div className="score-scale-labels" aria-hidden="true"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div>
           <Badge level={decision.level}>{decision.recommendation.short}</Badge>
         </div>
       </div>
 
-      <div className="grid-4">
+      <div className="grid-4 decision-metric-strip">
         <DecisionKpi
           label="Exposure Limit"
           value={decision.exposure.displayAmount}

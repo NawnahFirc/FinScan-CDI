@@ -4,13 +4,14 @@ Client-ready financial screening platform for corporate counterparty review.
 
 FinScan Corporate Decision Intelligence parses financial statements, calculates liquidity and risk indicators, benchmarks performance by sector, and produces an approve / monitor / restrict / reject recommendation with an audit trail.
 
-Version: 3.8.0
+Version: 3.8.1
 
-## Interface release 3.8.0
+## Interface release 3.8.1
 
-- New light and dark workspace with a persistent release badge.
+- Deep blue dark workspace with restrained red accents; white and red light theme.
+- Ruled panels, numbered navigation, a split statement intake layout, and a persistent release badge.
 - Mobile bottom navigation, searchable views (Ctrl/Cmd+K), and company switching.
-- Decision score ring, expandable score drivers, and evidence filters.
+- Calibrated decision score scale, expandable score drivers, and evidence filters.
 - Keyboard-accessible uploads and reduced-motion support.
 
 The maintained application lives in `FinScan-CDI-v3.7.0/` (directory name retained for compatibility). Root npm commands now run this application; `npm install` also installs its locked dependencies.

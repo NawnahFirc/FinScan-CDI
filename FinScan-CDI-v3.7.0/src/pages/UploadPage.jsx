@@ -581,14 +581,15 @@ export default function UploadPage() {
       </datalist>
       <div className="page-header">
         <div className="page-header-text">
-          <div className="workspace-eyebrow">FINANCIAL INTELLIGENCE / NEW ANALYSIS</div>
-          <h2>Start with the numbers.</h2>
+          <div className="workspace-eyebrow">STATEMENTS / INTAKE</div>
+          <h2>Financial statements</h2>
           <p>Load PDF, image, CSV, or XLSX statements, then review the detected currency before running analysis.</p>
         </div>
       </div>
 
-      <div className="card">
-        <div className="card-title">01 / Configure your analysis</div>
+      <div className="intake-grid">
+      <div className="card intake-parameters">
+        <div className="card-title">Analysis parameters</div>
         <div className="std-tabs">
           {Object.entries(STD_LABELS).map(([key, label]) => (
             <button
@@ -673,9 +674,10 @@ export default function UploadPage() {
           enqueue(event.dataTransfer.files)
         }}
       >
-        <div style={{ fontSize: 44, marginBottom: 12, fontFamily: 'DM Mono, monospace' }}>↑</div>
-        <h3>Drop files here or click to browse</h3>
-        <p style={{ marginBottom: 8 }}>PDF, image scans, CSV and XLSX files are ready to parse now.</p>
+        <div className="intake-file-types" aria-hidden="true"><span>PDF</span><span>CSV</span><span>XLSX</span></div>
+        <div className="intake-upload-glyph" aria-hidden="true">↑</div>
+        <h3>Add your statements</h3>
+        <p style={{ marginBottom: 8 }}>Drop files here, or select to browse. Image scans are also supported.</p>
         <p style={{ fontSize: 12, color: 'var(--text2)' }}>
           Text PDFs and spreadsheets parse locally first. Scanned PDFs and images use OCR, then optional Gemini fallback in Local + AI Analyst mode.
         </p>
@@ -690,6 +692,8 @@ export default function UploadPage() {
             event.target.value = ''
           }}
         />
+      </div>
+
       </div>
 
       {cachedStatements.length > 0 && (

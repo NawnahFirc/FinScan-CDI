@@ -25,7 +25,7 @@ export default function WorkspaceChrome() {
   return <>
     <a className="skip-link" href="#page-content">Skip to content</a>
     <header className="workspace-topbar">
-      <div className="workspace-identity"><span className="brand-mark">F</span><strong>FinScan <span>CDI</span></strong><span className="release-pill">v{APP_VERSION}</span></div>
+      <div className="workspace-identity"><span className="brand-slash" aria-hidden="true">/</span><strong>FinScan <span>CDI</span></strong><span className="release-pill">v{APP_VERSION}</span></div>
       <div className="workspace-tools">
         <button className="command-trigger" onClick={openNavigation} aria-label="Search views"><span>Search views</span><kbd>⌘ / Ctrl K</kbd></button>
         <button className="theme-control" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}><span aria-hidden="true">{theme === 'dark' ? '☀' : '☾'}</span><span>{theme === 'dark' ? 'Light' : 'Dark'}</span></button>
