@@ -4,7 +4,16 @@ Client-ready financial screening platform for corporate counterparty review.
 
 FinScan Corporate Decision Intelligence parses financial statements, calculates liquidity and risk indicators, benchmarks performance by sector, and produces an approve / monitor / restrict / reject recommendation with an audit trail.
 
-Version: 3.4.0
+Version: 3.8.0
+
+## Interface release 3.8.0
+
+- New light and dark workspace with a persistent release badge.
+- Mobile bottom navigation, searchable views (Ctrl/Cmd+K), and company switching.
+- Decision score ring, expandable score drivers, and evidence filters.
+- Keyboard-accessible uploads and reduced-motion support.
+
+The maintained application lives in `FinScan-CDI-v3.7.0/` (directory name retained for compatibility). Root npm commands now run this application; `npm install` also installs its locked dependencies.
 
 ## Core Capabilities
 
@@ -25,7 +34,7 @@ Do not enter third-party API keys into the app unless the optional AI analyst se
 
 ## Requirements
 
-Install Node.js 20 or newer.
+Install Node.js 22.12 or newer.
 
 Check your version:
 
@@ -33,7 +42,7 @@ Check your version:
 node --version
 ```
 
-If Node.js is missing or older than v20, install the current LTS release from https://nodejs.org.
+If Node.js is missing or older than v22.12, install the current LTS release from https://nodejs.org.
 
 ## Quick Start
 

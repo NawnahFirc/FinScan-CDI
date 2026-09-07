@@ -1,15 +1,18 @@
 {
   "name": "finscan-corporate-decision-intelligence",
-  "version": "3.4.0",
+  "version": "3.8.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev:frontend": "vite",
-    "dev:backend": "node --watch server.js",
-    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
-    "build": "vite build",
-    "preview": "vite preview",
-    "start": "node server.js"
+    "dev:frontend": "npm --prefix FinScan-CDI-v3.7.0 run dev:frontend",
+    "dev:backend": "npm --prefix FinScan-CDI-v3.7.0 run dev:backend",
+    "dev": "npm --prefix FinScan-CDI-v3.7.0 run dev",
+    "build": "npm --prefix FinScan-CDI-v3.7.0 run build",
+    "preview": "npm --prefix FinScan-CDI-v3.7.0 run preview",
+    "start": "npm --prefix FinScan-CDI-v3.7.0 run start",
+    "test": "npm --prefix FinScan-CDI-v3.7.0 run test",
+    "check": "npm --prefix FinScan-CDI-v3.7.0 run check",
+    "postinstall": "npm ci --prefix FinScan-CDI-v3.7.0 --no-audit --no-fund"
   },
   "dependencies": {
     "chart.js": "^4.4.1",
@@ -33,5 +36,8 @@
     "@vitejs/plugin-react": "^6.0.1",
     "concurrently": "^9.2.1",
     "vite": "^8.0.11"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

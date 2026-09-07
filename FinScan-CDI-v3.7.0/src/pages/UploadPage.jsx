@@ -581,13 +581,14 @@ export default function UploadPage() {
       </datalist>
       <div className="page-header">
         <div className="page-header-text">
-          <h2>Upload Financial Statements</h2>
+          <div className="workspace-eyebrow">FINANCIAL INTELLIGENCE / NEW ANALYSIS</div>
+          <h2>Start with the numbers.</h2>
           <p>Load PDF, image, CSV, or XLSX statements, then review the detected currency before running analysis.</p>
         </div>
       </div>
 
       <div className="card">
-        <div className="card-title">Analysis Setup</div>
+        <div className="card-title">01 / Configure your analysis</div>
         <div className="std-tabs">
           {Object.entries(STD_LABELS).map(([key, label]) => (
             <button
@@ -648,13 +649,17 @@ export default function UploadPage() {
           <div className="form-group" style={{ marginBottom: 0 }}>
             <label>Visual Mode</label>
             <div style={{ fontSize: 13, color: 'var(--text2)', padding: '9px 12px', background: 'var(--surface2)', borderRadius: 8, minHeight: 42 }}>
-              Use the sidebar theme switch to move between dark and light views. Dark mode is now the default to reduce glare.
+              Switch between light and dark using the theme control at the top of your workspace.
             </div>
           </div>
         </div>
       </div>
 
       <div
+        role="button"
+        tabIndex={0}
+        aria-label="Upload financial statements"
+        onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); fileRef.current?.click() } }}
         className={`upload-zone${drag ? ' drag' : ''}`}
         onClick={() => fileRef.current?.click()}
         onDragOver={(event) => {
@@ -668,7 +673,7 @@ export default function UploadPage() {
           enqueue(event.dataTransfer.files)
         }}
       >
-        <div style={{ fontSize: 44, marginBottom: 12, fontFamily: 'DM Mono, monospace' }}>IN</div>
+        <div style={{ fontSize: 44, marginBottom: 12, fontFamily: 'DM Mono, monospace' }}>↑</div>
         <h3>Drop files here or click to browse</h3>
         <p style={{ marginBottom: 8 }}>PDF, image scans, CSV and XLSX files are ready to parse now.</p>
         <p style={{ fontSize: 12, color: 'var(--text2)' }}>

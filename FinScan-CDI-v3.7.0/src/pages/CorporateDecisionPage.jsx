@@ -145,7 +145,8 @@ function DecisionKpi({ label, value, sub, level = 'info' }) {
 
 function ScoreFactor({ factor }) {
   return (
-    <div className="score-factor">
+    <details className="score-factor">
+      <summary>
       <div className="score-factor-head">
         <div>
           <strong>{factor.label}</strong>
@@ -159,8 +160,8 @@ function ScoreFactor({ factor }) {
           style={{ width: `${Math.max(4, Math.min(factor.score, 100))}%` }}
         />
       </div>
-      <p>{factor.driver}</p>
-    </div>
+      </summary><p>{factor.driver}</p>
+    </details>
   )
 }
 
@@ -179,7 +180,13 @@ const AUDIT_FORMULAS = {
 }
 
 function EvidenceTable({ evidence }) {
+  const [filter, setFilter] = useState('all')
+  const visible = evidence.filter(item => filter === 'all' || item.level === filter)
   return (
+    <div>
+    <div className="evidence-toolbar" aria-label="Filter evidence">
+      {[['all', 'All signals'], ['high', 'High risk'], ['medium', 'Watch'], ['low', 'Healthy']].map(([value, label]) => <button className="btn sm" key={value} aria-pressed={filter === value} onClick={() => setFilter(value)}>{label} · {value === 'all' ? evidence.length : evidence.filter(item => item.level === value).length}</button>)}
+    </div>
     <div className="report-table-wrap decision-evidence-wrap audit-trail-table">
       <table className="dt decision-evidence-table">
         <thead>
@@ -194,7 +201,7 @@ function EvidenceTable({ evidence }) {
           </tr>
         </thead>
         <tbody>
-          {evidence.map((item) => (
+          {visible.map((item) => (
             <tr key={item.metric}>
               <td><strong>{item.metric}</strong></td>
               <td className="num" style={{ color: toneForLevel(item.level) }}>{item.reading}</td>
@@ -212,13 +219,15 @@ function EvidenceTable({ evidence }) {
               </td>
             </tr>
           ))}
+          {!visible.length && <tr><td colSpan={7}>No signals in this category.</td></tr>}
         </tbody>
       </table>
-    </div>
+    </div></div>
   )
 }
 
 export default function CorporateDecisionPage() {
+  const theme = useStore(state => state.theme)
   const company = useStore(state => state.activeCompany)
   const addToast = useStore(state => state.addToast)
   const { watchlist, toggleWatchlist, explainMode, setExplainMode, setPresentationMode } = useStore()
@@ -269,11 +278,12 @@ export default function CorporateDecisionPage() {
       y: {
         beginAtZero: true,
         max: 100,
-        grid: { color: 'rgba(120,120,120,.18)' },
+        grid: { color: theme === 'dark' ? '#2a3548' : '#dfe5ee' },
+        ticks: { color: theme === 'dark' ? '#a4b0c6' : '#5e6b81' },
       },
       x: {
         grid: { display: false },
-        ticks: { maxRotation: 0, autoSkip: false },
+        ticks: { maxRotation: 35, autoSkip: false, color: theme === 'dark' ? '#a4b0c6' : '#5e6b81' },
       },
     },
   }
@@ -349,7 +359,10 @@ export default function CorporateDecisionPage() {
           </div>
         </div>
         <div className="decision-score-panel">
-          <div className="decision-score">{decision.compositeScore}</div>
+          <div className="score-orbit" role="img" aria-label={`Counterparty score ${decision.compositeScore} out of 100`}>
+            <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--border)" strokeWidth="7"/><circle cx="60" cy="60" r="52" fill="none" stroke={toneForLevel(decision.level)} strokeWidth="7" strokeLinecap="round" pathLength="100" strokeDasharray={`${Math.max(0, Math.min(100, decision.compositeScore))} 100`}/></svg>
+            <div className="decision-score">{decision.compositeScore}</div>
+          </div>
           <div className="decision-score-label">Counterparty Score / 100</div>
           <Badge level={decision.level}>{decision.recommendation.short}</Badge>
         </div>
