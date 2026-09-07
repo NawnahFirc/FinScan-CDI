@@ -3,14 +3,14 @@ import { APP_VERSION } from '../lib/version'
 import { useStore } from '../store/useStore'
 
 export const NAV = [
-  { section: 'Data' },
+  { section: 'Data', number: '01' },
   { id: 'upload', label: 'Upload / Entry', always: true },
   { id: 'compare', label: 'Multi-Company', always: true },
   { id: 'watchlist', label: 'Watchlist', always: true },
-  { section: 'Decision' },
+  { section: 'Decision', number: '02' },
   { id: 'decision', label: 'Decision Center' },
   { id: 'scenario', label: 'Scenario Simulator' },
-  { section: 'Analysis' },
+  { section: 'Analysis', number: '03' },
   { id: 'overview', label: 'Overview' },
   { id: 'radar', label: 'Benchmark Radar' },
   { id: 'risktimeline', label: 'Risk Timeline' },
@@ -18,7 +18,7 @@ export const NAV = [
   { id: 'ratios', label: 'Financial Ratios' },
   { id: 'timeseries', label: 'Year-over-Year' },
   { id: 'fraud', label: 'Fraud Signals' },
-  { section: 'Reports' },
+  { section: 'Reports', number: '04' },
   { id: 'statements', label: 'Statements' },
   { id: 'fullreport', label: 'Full Report' },
   { id: 'aireport', label: 'Analyst Memo', badge: 'LOCAL' },
@@ -230,7 +230,7 @@ export default function Sidebar() {
 
       <nav className="nav">
         {NAV.map((item, index) => {
-          if (item.section) return <div key={index} className="nav-section">{item.section}</div>
+          if (item.section) return <div key={index} className="nav-section"><span className="nav-section-number" aria-hidden="true">{item.number}</span>{item.section}</div>
           const disabled = !hasData && !item.always
           const active = activePage === item.id
 
