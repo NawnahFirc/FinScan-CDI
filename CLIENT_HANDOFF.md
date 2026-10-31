@@ -1,8 +1,12 @@
 # Client Handoff
 
-Package name: FinScan Corporate Decision Intelligence v3.4
+Package name: FinScan Corporate Decision Intelligence v3.8.1
 
-This archive contains the source code, lockfile, launcher scripts, OCR language data, and one sample statement needed to run the application.
+This archive contains the source code, lockfile, launcher scripts, OCR language data, parser tests, and a sample statement needed to run the application.
+
+FinScan starts with an empty analysis workspace on each app launch. Previously reviewed statements remain available only through the manual cached-statement restore flow on the Upload page.
+
+Gemini is the primary AI-assisted parser and report provider when `GEMINI_API_KEY` is configured.
 
 Excluded from the client archive:
 
