@@ -11,13 +11,13 @@ echo.
 where node >nul 2>nul
 if errorlevel 1 (
   echo Node.js was not found.
-  echo Install Node.js 20 LTS or newer from https://nodejs.org, then run this file again.
+  echo Install Node.js 22.12 LTS or newer from https://nodejs.org, then run this file again.
   goto error
 )
 
 where npm >nul 2>nul
 if errorlevel 1 (
-  echo npm was not found. Reinstall Node.js 20 LTS or newer, then run this file again.
+  echo npm was not found. Reinstall Node.js 22.12 LTS or newer, then run this file again.
   goto error
 )
 
@@ -41,7 +41,7 @@ echo Using port %APP_PORT%.
 echo.
 
 echo Installing dependencies...
-call npm install
+call npm ci
 if errorlevel 1 goto error
 
 echo.
@@ -65,7 +65,7 @@ echo.
 echo FinScan could not start.
 echo Most common fixes:
 echo 1. Make sure you are inside the FinScan Corporate Decision Intelligence folder.
-echo 2. Install Node.js 20 LTS or newer.
+echo 2. Install Node.js 22.12 LTS or newer.
 echo 3. Close other terminals already running FinScan, then try again.
 echo.
 pause

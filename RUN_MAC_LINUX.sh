@@ -3,7 +3,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 echo "Installing FinScan Corporate Decision Intelligence dependencies..."
-npm install
+npm ci
 
 echo "Building the application..."
 npm run build
