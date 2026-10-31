@@ -4,22 +4,24 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev:frontend": "npm --prefix FinScan-CDI-v3.7.0 run dev:frontend",
-    "dev:backend": "npm --prefix FinScan-CDI-v3.7.0 run dev:backend",
-    "dev": "npm --prefix FinScan-CDI-v3.7.0 run dev",
-    "build": "npm --prefix FinScan-CDI-v3.7.0 run build",
-    "preview": "npm --prefix FinScan-CDI-v3.7.0 run preview",
-    "start": "npm --prefix FinScan-CDI-v3.7.0 run start",
-    "test": "npm --prefix FinScan-CDI-v3.7.0 run test",
-    "check": "npm --prefix FinScan-CDI-v3.7.0 run check",
-    "postinstall": "npm ci --prefix FinScan-CDI-v3.7.0 --no-audit --no-fund"
+    "dev:frontend": "vite",
+    "dev:backend": "node --watch server.js",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "build": "vite build",
+    "test": "vitest run",
+    "preview": "vite preview",
+    "start": "node server.js",
+    "prepare:ocr": "node scripts/prepare-ocr.mjs",
+    "prebuild": "npm run prepare:ocr",
+    "predev:frontend": "npm run prepare:ocr",
+    "check": "npm run build && npm test"
   },
   "dependencies": {
     "chart.js": "^4.4.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "express-rate-limit": "^8.5.1",
+    "express": "^4.22.2",
+    "express-rate-limit": "^8.7.2",
     "helmet": "^8.1.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
@@ -29,15 +31,22 @@
     "react-dom": "^18.3.1",
     "read-excel-file": "^9.0.9",
     "tesseract.js": "^7.0.0",
-    "zod": "^4.4.3",
+    "zod": "^4.6.7",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^6.0.1",
-    "concurrently": "^9.2.1",
-    "vite": "^8.0.11"
+    "@vitejs/plugin-react": "^6.1.2",
+    "concurrently": "^9.2.4",
+    "vite": "^8.3.5",
+    "vitest": "^4.1.12"
   },
   "engines": {
     "node": ">=22.12.0"
+  },
+  "overrides": {
+    "qs": "^6.17.1",
+    "proxy-addr": "^2.0.8",
+    "body-parser": "^1.20.7",
+    "dompurify": "^3.4.17"
   }
 }

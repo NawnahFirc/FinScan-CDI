@@ -14,7 +14,7 @@ Version: 3.8.1
 - Calibrated decision score scale, expandable score drivers, and evidence filters.
 - Keyboard-accessible uploads and reduced-motion support.
 
-The maintained application lives in `FinScan-CDI-v3.7.0/` (directory name retained for compatibility). Root npm commands now run this application; `npm install` also installs its locked dependencies.
+The application lives at the repository root. Run all npm commands from this folder.
 
 ## Core Capabilities
 
@@ -95,13 +95,13 @@ http://localhost:5173
 
 ## Optional AI Analyst Service
 
-Most features work without an API key. To enable the optional AI-assisted analyst service:
+Most features work without an API key. To enable AI-assisted extraction and report writing:
 
 1. Copy `.env.example` to `.env`.
-2. Add your Anthropic API key to `AI_ANALYST_API_KEY=`.
+2. Add one provider key: `GEMINI_API_KEY`, `OPENAI_API_KEY` or `AI_ANALYST_API_KEY` (Anthropic). If several are set, Gemini is used first, then OpenAI, then Anthropic. Model names can be overridden with the variables listed in `.env.example`.
 3. Restart the app.
 
-Without this key, local parsing, ratios, scoring, watchlists, simulations, exports, and local memo generation remain available.
+Without a key, local parsing, ratios, scoring, watchlists, simulations, exports, and local memo generation remain available.
 
 ## Recommended Workflow
 
@@ -128,7 +128,7 @@ Use the Extraction Review panel to correct values. For low-quality scans, CSV or
 
 `Optional AI analyst is disabled`
 
-This is expected unless `AI_ANALYST_API_KEY` is configured in `.env`.
+This is expected unless a provider key is configured in `.env`.
 
 ## Project Layout
 
@@ -139,6 +139,8 @@ src/
   pages/        Upload, decision, reports, scenarios, watchlist, analysis pages
   store/        Local workspace state
 samples/        Example financial statement
+scripts/        Build helpers (local OCR assets)
+tests/          Parser, reliability and server tests
 server.js       Optional backend and production server
 ```
 
