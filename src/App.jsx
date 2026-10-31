@@ -1,43 +1,32 @@
-import React, { useEffect } from 'react'
+import React, { Suspense, lazy, useEffect } from 'react'
 import Sidebar from './components/Sidebar'
 import WorkspaceChrome from './components/WorkspaceChrome'
 import Toast from './components/Toast'
 import ErrorBoundary from './components/ErrorBoundary'
 import { useStore } from './store/useStore'
 import UploadPage from './pages/UploadPage'
-import LiquidityPage from './pages/LiquidityPage'
-import AnalystMemoPage from './pages/AnalystMemoPage'
-import CorporateDecisionPage from './pages/CorporateDecisionPage'
-import ScenarioSimulatorPage from './pages/ScenarioSimulatorPage'
-import BenchmarkRadarPage from './pages/BenchmarkRadarPage'
-import WatchlistPage from './pages/WatchlistPage'
-import RiskTimelinePage from './pages/RiskTimelinePage'
-import {
-  OverviewPage,
-  RatiosPage,
-  FraudPage,
-  TimeSeriesPage,
-  StatementsPage,
-  FullReportPage,
-  ComparePage,
-} from './pages/AnalysisPages'
 
+// Every view except Upload is loaded on first visit, so the initial bundle
+// stays small and chart/report code only downloads when it is needed.
 const PAGES = {
-  upload: <UploadPage />,
-  compare: <ComparePage />,
-  overview: <OverviewPage />,
-  decision: <CorporateDecisionPage />,
-  liquidity: <LiquidityPage />,
-  statements: <StatementsPage />,
-  ratios: <RatiosPage />,
-  timeseries: <TimeSeriesPage />,
-  fraud: <FraudPage />,
-  fullreport: <FullReportPage />,
-  aireport: <AnalystMemoPage />,
-  scenario: <ScenarioSimulatorPage />,
-  radar: <BenchmarkRadarPage />,
-  watchlist: <WatchlistPage />,
-  risktimeline: <RiskTimelinePage />,
+  compare: lazy(() => import('./pages/analysis/ComparePage').then((m) => ({ default: m.ComparePage }))),
+  overview: lazy(() => import('./pages/analysis/OverviewPage').then((m) => ({ default: m.OverviewPage }))),
+  decision: lazy(() => import('./pages/CorporateDecisionPage')),
+  liquidity: lazy(() => import('./pages/LiquidityPage')),
+  statements: lazy(() => import('./pages/analysis/StatementsPage').then((m) => ({ default: m.StatementsPage }))),
+  ratios: lazy(() => import('./pages/analysis/RatiosPage').then((m) => ({ default: m.RatiosPage }))),
+  timeseries: lazy(() => import('./pages/analysis/TimeSeriesPage').then((m) => ({ default: m.TimeSeriesPage }))),
+  fraud: lazy(() => import('./pages/analysis/FraudPage').then((m) => ({ default: m.FraudPage }))),
+  fullreport: lazy(() => import('./pages/analysis/FullReportPage').then((m) => ({ default: m.FullReportPage }))),
+  aireport: lazy(() => import('./pages/AnalystMemoPage')),
+  scenario: lazy(() => import('./pages/ScenarioSimulatorPage')),
+  radar: lazy(() => import('./pages/BenchmarkRadarPage')),
+  watchlist: lazy(() => import('./pages/WatchlistPage')),
+  risktimeline: lazy(() => import('./pages/RiskTimelinePage')),
+}
+
+function PageLoading() {
+  return <div className="card" role="status" aria-live="polite">Loading view…</div>
 }
 
 export default function App() {
@@ -57,10 +46,20 @@ export default function App() {
         <main id="workspace" className={`main${presentationMode ? ' main-fullscreen' : ''}`}>
           {!presentationMode && <WorkspaceChrome />}
           <div hidden={activePage !== 'upload'}><UploadPage /></div>
-          {activePage !== 'upload' && <ErrorBoundary key={activePage} onRecover={()=>useStore.getState().setActivePage('upload')}>{PAGES[activePage]}</ErrorBoundary>}
+          {activePage !== 'upload' && <ErrorBoundary key={activePage} onRecover={()=>useStore.getState().setActivePage('upload')}><ActivePage page={activePage} /></ErrorBoundary>}
         </main>
         <Toast />
       </div>
     </div>
+  )
+}
+
+function ActivePage({ page }) {
+  const Page = PAGES[page]
+  if (!Page) return null
+  return (
+    <Suspense fallback={<PageLoading />}>
+      <Page />
+    </Suspense>
   )
 }

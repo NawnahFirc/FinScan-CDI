@@ -36,8 +36,10 @@ API keys belong in hosting environment variables, never VITE variables or commit
 
 ## Sample document findings
 
-Both supplied PDFs are scans. Regression checks cover their statement totals, year alignment and cash-flow columns. The current revenue cell in MZABI is blank in the supplied statement; it remains missing. Some damaged MZABI numeric cells require source review. GEMS uses dinar amounts and Tunisian accounting context, so inferred TND requires confirmation. Exact digits can differ between OCR runs and browser rendering; the review step remains necessary.
+Both supplied client PDFs are scans. Regression checks cover their statement totals, year alignment and cash-flow columns. In one statement the current revenue cell is blank in the source; it remains missing, and some damaged numeric cells require source review. The other uses dinar amounts and Tunisian accounting context, so inferred TND requires confirmation. Exact digits can differ between OCR runs and browser rendering; the review step remains necessary.
 
 Embedded FX rates are a dated snapshot, not live exchange rates. Source amounts and conversion metadata are retained. Reports are screening aids and depend on the reviewed input.
 
 Private source PDFs and extracted OCR fixtures are local verification material and should not be published with the application.
+
+The regression fixtures for these documents live in `tests/fixtures/`, which is gitignored. Tests that need them are skipped when the files are absent.
